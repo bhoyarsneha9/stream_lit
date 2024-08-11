@@ -40,11 +40,11 @@ if selection == "Car Maintenance Scheduling & Repair Guides":
     # DIY Guides
     st.subheader("Car Maintenance Guides")
     st.write("""
-    - **Oil Change**: [How to change your oil](https://www.example.com/oil-change-guide)
-    - **Tire Rotation**: [How to rotate your tires](https://www.example.com/tire-rotation-guide)
-    - **Brake Inspection**: [How to inspect your brakes](https://www.example.com/brake-inspection-guide)
-    - **Air Filter Replacement**: [How to replace your air filter](https://www.example.com/air-filter-guide)
-    - **Battery Check**: [How to check your battery](https://www.example.com/battery-check-guide)
+    - **Oil Change**: [How to change your oil](https://www.wikihow.com/Change-the-Oil-in-Your-Car)
+    - **Tire Rotation**: [How to rotate your tires](https://www.wikihow.com/Rotate-Tires#:~:text=Put%20the%20front%20wheels%20in,(8%2C000%E2%80%9312%2C900%20km).)
+    - **Brake Inspection**: [How to inspect your brakes](https://www.wikihow.com/Check-Brake-Pads#:~:text=Listen%20to%20your%20brakes%20as,brake%20pads%20get%20too%20thin.&text=You%20can%20see%20if%20your,by%20taking%20off%20the%20wheel.)
+    - **Air Filter Replacement**: [How to replace your air filter](https://www.wikihow.com/Change-a-Home-Air-Filter#:~:text=To%20avoid%20hurting%20the%20machinery,while%20the%20filter%20is%20removed.&text=Remove%20the%20old%20filter.,filter%20should%20slide%20out%20easily.)
+    - **Battery Check**: [How to check your battery](https://www.wikihow.com/Check-a-Car-Battery)
     """)
 
 elif selection == "Tire Selection & Comparison":
