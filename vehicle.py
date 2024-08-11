@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import datetime
 
-# Fake data for vehicle maintenance reminders
+# Fake data for maintenance reminders
 maintenance_data = {
     'Task': ['Oil Change', 'Tire Rotation', 'Brake Inspection', 'Air Filter Replacement', 'Battery Check'],
     'Last Completed': [datetime.date(2024, 1, 15), datetime.date(2024, 2, 10), datetime.date(2024, 3, 5), datetime.date(2024, 4, 20), datetime.date(2024, 5, 18)],
@@ -31,6 +31,7 @@ st.write("Set up reminders for regular vehicle maintenance tasks.")
 
 maintenance_df = pd.DataFrame(maintenance_data)
 maintenance_df['Next Due Date'] = maintenance_df.apply(lambda row: calculate_next_due_date(row['Last Completed'], row['Frequency (Days)']), axis=1)
+
 st.dataframe(maintenance_df)
 
 # DIY Guides
@@ -57,9 +58,6 @@ st.dataframe(filtered_tires)
 
 # Footer
 st.write("For more information, visit our [website](https://www.example.com).")
-
-if __name__ == '__main__':
-    st.run()
 
 
 
