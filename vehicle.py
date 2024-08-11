@@ -24,10 +24,10 @@ def calculate_next_due_date(last_completed, frequency):
 
 # Navigation
 st.sidebar.title("Navigation")
-selection = st.sidebar.radio("Go to", ["Maintenance Scheduling & DIY Repair Guides", "Tire Selection & Comparison Tool"])
+selection = st.sidebar.radio("Go to", ["Car Maintenance Scheduling & Repair Guides", "Tire Selection & Comparison"])
 
-if selection == "Maintenance Scheduling & DIY Repair Guides":
-    st.title("Maintenance Scheduling & DIY Repair Guides")
+if selection == "Car Maintenance Scheduling & Repair Guides":
+    st.title("Car Maintenance Scheduling & Repair Guides")
     
     # Maintenance Reminders Section
     st.header("Vehicle Maintenance Reminders")
@@ -38,7 +38,7 @@ if selection == "Maintenance Scheduling & DIY Repair Guides":
     st.dataframe(maintenance_df)
 
     # DIY Guides
-    st.subheader("DIY Maintenance Guides")
+    st.subheader("Car Maintenance Guides")
     st.write("""
     - **Oil Change**: [How to change your oil](https://www.example.com/oil-change-guide)
     - **Tire Rotation**: [How to rotate your tires](https://www.example.com/tire-rotation-guide)
@@ -47,8 +47,8 @@ if selection == "Maintenance Scheduling & DIY Repair Guides":
     - **Battery Check**: [How to check your battery](https://www.example.com/battery-check-guide)
     """)
 
-elif selection == "Tire Selection & Comparison Tool":
-    st.title("Tire Selection & Comparison Tool")
+elif selection == "Tire Selection & Comparison":
+    st.title("Tire Selection & Comparison")
     
     # Tire Comparison Tool
     st.write("Find the best tire options based on your vehicle model, driving habits, and local climate conditions.")
