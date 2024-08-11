@@ -1,89 +1,139 @@
 import streamlit as st
-import pandas as pd
-import datetime
+from datetime import datetime, timedelta
 
-# Fake data for vehicle maintenance reminders
-maintenance_data = {
-    'Task': ['Oil Change', 'Tire Rotation', 'Brake Inspection', 'Air Filter Replacement', 'Battery Check'],
-    'Last Completed': [datetime.date(2024, 1, 15), datetime.date(2024, 2, 10), datetime.date(2024, 3, 5), datetime.date(2024, 4, 20), datetime.date(2024, 5, 18)],
-    'Frequency (Days)': [90, 180, 365, 180, 365]
+# Function to calculate the next maintenance date
+def calculate_next_maintenance(last_date, interval_days):
+    return last_date + timedelta(days=interval_days)
+
+# Fake data for tires
+fake_tire_data = [
+    {"Brand": "Brand A", "Model": "All-Season X", "Tread Life": "60,000 miles", "Performance": "Good", "Price": "$120", "Rating": 4.5},
+    {"Brand": "Brand B", "Model": "Winter Y", "Tread Life": "50,000 miles", "Performance": "Excellent", "Price": "$140", "Rating": 4.7},
+    {"Brand": "Brand C", "Model": "Summer Z", "Tread Life": "45,000 miles", "Performance": "High", "Price": "$150", "Rating": 4.9},
+    {"Brand": "Brand D", "Model": "Performance Q", "Tread Life": "40,000 miles", "Performance": "Outstanding", "Price": "$180", "Rating": 4.8},
+    {"Brand": "Brand E", "Model": "Off-Road P", "Tread Life": "70,000 miles", "Performance": "Very Good", "Price": "$160", "Rating": 4.6}
+]
+
+# Fake data for car troubleshooting
+fake_troubleshooting_data = {
+    "Strange Noise": {
+        "Issue": "Possible loose belt or worn bearings",
+        "Solution": "Check belts for wear and tighten them. Inspect bearings and replace if necessary."
+    },
+    "Engine Overheating": {
+        "Issue": "Coolant leak or malfunctioning radiator",
+        "Solution": "Check coolant levels and inspect the radiator for leaks. Replace any faulty parts."
+    },
+    "Brake Warning Light": {
+        "Issue": "Worn brake pads or low brake fluid",
+        "Solution": "Check brake pads and replace if worn. Ensure brake fluid is at the correct level."
+    },
+    "Car Won't Start": {
+        "Issue": "Dead battery or faulty starter",
+        "Solution": "Test the battery and replace if necessary. Check the starter for any issues."
+    },
+    "Vibration While Driving": {
+        "Issue": "Unbalanced tires or alignment issues",
+        "Solution": "Have the tires balanced and check the vehicle's alignment."
+    }
 }
 
-# Fake data for tire comparison
-tire_data = {
-    'Tire Model': ['All-Season A1', 'Winter Grip X2', 'Performance P3', 'Off-Road R4', 'Eco-Friendly E5'],
-    'Car Model': ['Sedan', 'SUV', 'Sports Car', 'Truck', 'Hybrid'],
-    'Driving Habits': ['Daily Commute', 'Snowy Roads', 'High Speed', 'Off-Road', 'Fuel Efficiency'],
-    'Climate Conditions': ['Mild', 'Snowy', 'Mild', 'Harsh', 'Mild'],
-    'User Reviews': [4.5, 4.7, 4.2, 4.8, 4.9],
-    'Expert Ratings': ['Recommended', 'Highly Recommended', 'Recommended', 'Highly Recommended', 'Recommended']
-}
-
-def calculate_next_due_date(last_completed, frequency):
-    return last_completed + datetime.timedelta(days=frequency)
-
-# Function to add a new maintenance schedule
-def add_maintenance_task(task, last_completed, frequency):
-    maintenance_data['Task'].append(task)
-    maintenance_data['Last Completed'].append(last_completed)
-    maintenance_data['Frequency (Days)'].append(frequency)
-
-# Navigation
+# Navigation options
 st.sidebar.title("Navigation")
-selection = st.sidebar.radio("Go to", ["Maintenance Scheduling & Repair Guides", "Tire Selection & Comparison"])
+page = st.sidebar.radio("Go to", ["Maintenance Scheduling & Repair Guides", "Tire Selection & Comparison", "Interactive Car Troubleshooting Guide"])
 
-if selection == "Maintenance Scheduling & Repair Guides":
+# Section 1: Maintenance Scheduling & Repair Guides
+if page == "Maintenance Scheduling & Repair Guides":
     st.title("Maintenance Scheduling & Repair Guides")
-    
-    # Maintenance Reminders Section
-    st.header("Vehicle Maintenance Reminders")
-    st.write("Set up and manage reminders for essential vehicle maintenance tasks.")
 
-    maintenance_df = pd.DataFrame(maintenance_data)
-    maintenance_df['Next Due Date'] = maintenance_df.apply(lambda row: calculate_next_due_date(row['Last Completed'], row['Frequency (Days)']), axis=1)
-    st.dataframe(maintenance_df)
-    
-    # Add new maintenance task
-    st.subheader("Add New Maintenance Schedule")
-    with st.form("Add Task Form"):
-        task = st.text_input("Task")
-        last_completed = st.date_input("Last Completed Date", datetime.date.today())
-        frequency = st.number_input("Frequency (Days)", min_value=1, max_value=365)
-        submit_button = st.form_submit_button(label="Add Task")
-    
-        if submit_button:
-            add_maintenance_task(task, last_completed, frequency)
-            st.success(f"New maintenance task '{task}' added successfully!")
-            maintenance_df = pd.DataFrame(maintenance_data)
-            maintenance_df['Next Due Date'] = maintenance_df.apply(lambda row: calculate_next_due_date(row['Last Completed'], row['Frequency (Days)']), axis=1)
-            st.dataframe(maintenance_df)
+    # Sidebar for Maintenance Reminders
+    st.sidebar.header("Set Up Maintenance Reminders")
+    task = st.sidebar.text_input("Enter Maintenance Task", "Oil Change")
+    last_date = st.sidebar.date_input("Last Maintenance Date", datetime.now())
+    interval = st.sidebar.number_input("Maintenance Interval (days)", min_value=1, max_value=365, value=90)
+
+    next_date = calculate_next_maintenance(last_date, interval)
+    st.sidebar.write(f"Next {task}: {next_date.strftime('%Y-%m-%d')}")
+
+    # Option to add additional maintenance schedules
+    if st.sidebar.button("Add Another Task"):
+        st.sidebar.text_input("Enter Another Maintenance Task", "Tire Rotation")
+        st.sidebar.date_input("Last Maintenance Date", datetime.now())
+        st.sidebar.number_input("Maintenance Interval (days)", min_value=1, max_value=365, value=180)
 
     # DIY Guides
-    st.subheader("DIY Maintenance Guides")
-    st.write("""
-    - **Oil Change**: [How to change your oil](https://www.example.com/oil-change-guide)
-    - **Tire Rotation**: [How to rotate your tires](https://www.example.com/tire-rotation-guide)
-    - **Brake Inspection**: [How to inspect your brakes](https://www.example.com/brake-inspection-guide)
-    - **Air Filter Replacement**: [How to replace your air filter](https://www.example.com/air-filter-guide)
-    - **Battery Check**: [How to check your battery](https://www.example.com/battery-check-guide)
-    """)
+    st.header("DIY Guides")
+    guides = {
+        "Oil Change": {
+            "Steps": "1. Gather tools and supplies.\n2. Drain the old oil.\n3. Replace the oil filter.\n4. Add new oil.\n5. Check for leaks.",
+            "Video": "https://www.youtube.com/embed/O1hF25Cowv8",
+            "Tools": "Wrench, Oil filter, Funnel, Oil pan",
+            "Safety Tips": "Always wear gloves and ensure the car is on a flat surface."
+        },
+        "Tire Rotation": {
+            "Steps": "1. Loosen the lug nuts.\n2. Lift the car with a jack.\n3. Rotate the tires.\n4. Lower the car and tighten the lug nuts.",
+            "Video": "https://www.youtube.com/embed/t_5lM17uu4k",
+            "Tools": "Jack, Lug wrench",
+            "Safety Tips": "Use a jack stand for added safety."
+        },
+        "Brake Inspection": {
+            "Steps": "1. Remove the wheel.\n2. Inspect brake pads and rotors.\n3. Check for any signs of wear or damage.\n4. Reassemble the wheel.",
+            "Video": "https://www.youtube.com/embed/M7q7xOGAhkc",
+            "Tools": "Wrench, Jack, Brake cleaner",
+            "Safety Tips": "Ensure the car is securely lifted and use proper tools."
+        }
+    }
+    selected_guide = st.selectbox("Select a Maintenance Task for DIY Guide", list(guides.keys()))
+    guide = guides[selected_guide]
 
-elif selection == "Tire Selection & Comparison":
+    st.subheader(f"DIY Guide for {selected_guide}")
+    st.text(guide["Steps"])
+    st.markdown(f"[Watch Video]({guide['Video']})")
+    st.text(f"Tools Needed: {guide['Tools']}")
+    st.text(f"Safety Tips: {guide['Safety Tips']}")
+
+# Section 2: Tire Selection & Comparison
+elif page == "Tire Selection & Comparison":
     st.title("Tire Selection & Comparison")
-    
-    # Tire Comparison Tool
-    st.write("Find the best tire options based on your vehicle model, driving habits, and local climate conditions.")
 
-    tire_df = pd.DataFrame(tire_data)
-    st.dataframe(tire_df)
+    # Filters
+    car_model = st.text_input("Enter Your Car Model")
+    driving_habit = st.selectbox("Select Your Driving Habit", ["Daily Commute", "Off-Road", "Performance"])
+    climate_condition = st.selectbox("Select Climate Condition", ["All-Season", "Winter", "Summer"])
 
-    # Tire selection filter
-    car_model = st.selectbox("Select Car Model", tire_df['Car Model'].unique())
-    filtered_tires = tire_df[tire_df['Car Model'] == car_model]
-    st.dataframe(filtered_tires)
+    # Filter and display tire options based on user selection
+    filtered_tires = [
+        tire for tire in fake_tire_data
+        if tire["Performance"] == driving_habit or tire["Model"].split()[0] == climate_condition
+    ]
 
-# Footer
-st.sidebar.write("For more information, visit our [website](https://www.example.com).")
+    st.subheader("Available Tire Options")
+    if filtered_tires:
+        for tire in filtered_tires:
+            st.write(f"**Brand:** {tire['Brand']}")
+            st.write(f"**Model:** {tire['Model']}")
+            st.write(f"**Tread Life:** {tire['Tread Life']}")
+            st.write(f"**Performance:** {tire['Performance']}")
+            st.write(f"**Price:** {tire['Price']}")
+            st.write(f"**Rating:** {tire['Rating']} stars")
+            st.write("---")
+    else:
+        st.write("No tires found matching your criteria.")
+
+# Section 3: Interactive Car Troubleshooting Guide
+elif page == "Interactive Car Troubleshooting Guide":
+    st.title("Interactive Car Troubleshooting Guide")
+
+    # Symptoms selection
+    symptom = st.selectbox("Select the Symptom Your Car is Experiencing", list(fake_troubleshooting_data.keys()))
+    issue_info = fake_troubleshooting_data[symptom]
+
+    # Display the potential issue and solution
+    st.subheader(f"Potential Issue: {issue_info['Issue']}")
+    st.write(f"**Suggested Solution:** {issue_info['Solution']}")
+
+    st.info("Always ensure safety while diagnosing or repairing your vehicle. If in doubt, seek professional help.")
+
 
 
 
