@@ -7,11 +7,11 @@ def calculate_next_maintenance(last_date, interval_days):
 
 # Fake data for tires
 fake_tire_data = [
-    {"Brand": "Brand A", "Model": "All-Season X", "Tread Life": "60,000 miles", "Performance": "Good", "Price": "$120", "Rating": 4.5},
-    {"Brand": "Brand B", "Model": "Winter Y", "Tread Life": "50,000 miles", "Performance": "Excellent", "Price": "$140", "Rating": 4.7},
-    {"Brand": "Brand C", "Model": "Summer Z", "Tread Life": "45,000 miles", "Performance": "High", "Price": "$150", "Rating": 4.9},
-    {"Brand": "Brand D", "Model": "Performance Q", "Tread Life": "40,000 miles", "Performance": "Outstanding", "Price": "$180", "Rating": 4.8},
-    {"Brand": "Brand E", "Model": "Off-Road P", "Tread Life": "70,000 miles", "Performance": "Very Good", "Price": "$160", "Rating": 4.6}
+    {"Brand": "Michelin", "Model": "All-Season X", "Tread Life": "60,000 miles", "Performance": "Good", "Price": "$120", "Rating": 4.5},
+    {"Brand": "Bridgestone", "Model": "Winter Y", "Tread Life": "50,000 miles", "Performance": "Excellent", "Price": "$140", "Rating": 4.7},
+    {"Brand": "Goodyear", "Model": "Summer Z", "Tread Life": "45,000 miles", "Performance": "High", "Price": "$150", "Rating": 4.9},
+    {"Brand": "Continental", "Model": "Performance Q", "Tread Life": "40,000 miles", "Performance": "Outstanding", "Price": "$180", "Rating": 4.8},
+    {"Brand": "Pirelli", "Model": "Off-Road P", "Tread Life": "70,000 miles", "Performance": "Very Good", "Price": "$160", "Rating": 4.6}
 ]
 
 # Fake data for car troubleshooting
