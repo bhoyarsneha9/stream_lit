@@ -66,19 +66,19 @@ if page == "Maintenance Scheduling & Repair Guides":
     guides = {
         "Oil Change": {
             "Steps": "1. Gather tools and supplies.\n2. Drain the old oil.\n3. Replace the oil filter.\n4. Add new oil.\n5. Check for leaks.",
-            "Video": "https://www.youtube.com/embed/O1hF25Cowv8",
+            "Video": "https://youtu.be/O1hF25Cowv8?si=sohHVnnsafhoBr4k",
             "Tools": "Wrench, Oil filter, Funnel, Oil pan",
             "Safety Tips": "Always wear gloves and ensure the car is on a flat surface."
         },
         "Tire Rotation": {
             "Steps": "1. Loosen the lug nuts.\n2. Lift the car with a jack.\n3. Rotate the tires.\n4. Lower the car and tighten the lug nuts.",
-            "Video": "https://www.youtube.com/embed/t_5lM17uu4k",
+            "Video": "https://youtu.be/_As8hQVqlvc?si=w6oqMURIfTE4H9fB",
             "Tools": "Jack, Lug wrench",
             "Safety Tips": "Use a jack stand for added safety."
         },
         "Brake Inspection": {
             "Steps": "1. Remove the wheel.\n2. Inspect brake pads and rotors.\n3. Check for any signs of wear or damage.\n4. Reassemble the wheel.",
-            "Video": "https://www.youtube.com/embed/M7q7xOGAhkc",
+            "Video": "https://youtu.be/_j6ZvsEBO7Y?si=XtC-RraxxOdXFFPf",
             "Tools": "Wrench, Jack, Brake cleaner",
             "Safety Tips": "Ensure the car is securely lifted and use proper tools."
         }
