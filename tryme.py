@@ -25,9 +25,11 @@ students = [
 df = pd.DataFrame(students, columns=["Name"])
 df["Timestamp"] = datetime.now()
 
+search_history = []
+
 st.set_page_config(page_title="🔥 TRYME 🫦", page_icon="🔥", layout="wide")
 st.sidebar.title("Navigation")
-page = st.sidebar.radio("Go to", ["Home", "Compatibility Test", "Random Matches", "Questionnaire", "Registered Users"])
+page = st.sidebar.radio("Go to", ["Home", "Compatibility Test", "Random Matches", "Questionnaire", "Registered Users", "Name Compatibility", "Search History"])
 
 if page == "Home":
     st.title("🔥 Welcome to TRYME 🫦")
@@ -60,13 +62,36 @@ elif page == "Random Matches":
         match = random.sample(df["Name"].tolist(), 2)
         st.write(f"✨ Your match is: {match[0]} & {match[1]} 💘")
         if random.randint(1, 100) > 80:
-            st.balloons()
+            st.snow()
 
 elif page == "Questionnaire":
     st.subheader("📝 Answer Some Fun Questions")
-    for q in ["What's your darkest humor joke?", "If you had to commit a crime, what would it be?", "What’s the worst thing you've ever laughed at?", "If you were a serial killer, what would be your nickname?"]:
+    for q in ["What's your dark fantasy?", "How do you feel about sex outside?", "What’s the worst thing you've ever laughed at?", "What type of nude pictures would you like?","Are you a boob,ass or a dick person?"]:
         st.text_input(q, "")
     
 elif page == "Registered Users":
     st.subheader("🔍 View All Registered Users")
     st.dataframe(df)
+
+elif page == "Name Compatibility":
+    st.subheader("💕 Find Compatibility Between Two Names")
+    name1 = st.selectbox("Select First Name", df["Name"].tolist())
+    name2 = st.selectbox("Select Second Name", df["Name"].tolist())
+    
+    if st.button("Check Compatibility 💕"):
+        if name1 != name2:
+            compatibility = random.randint(10, 100)
+            st.write(f"💞 {name1} & {name2} have a compatibility of {compatibility}%!")
+            search_history.append((name1, name2, compatibility))
+            if compatibility > 80:
+                st.snow()
+        else:
+            st.error("Select two different names!")
+
+elif page == "Search History":
+    st.subheader("📜 Previous Searches")
+    if search_history:
+        for entry in search_history:
+            st.write(f"{entry[0]} & {entry[1]} - {entry[2]}% Compatible")
+    else:
+        st.write("No searches yet!")
