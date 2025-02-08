@@ -35,6 +35,7 @@ p2 = st.selectbox("Select Person 2", df["Name"].tolist())
 if st.button("Calculate Compatibility 🔥"):
     if p1 != p2:
         match_percentage = random.randint(10, 100)
+        st.session_state["last_match"] = (p1, p2, match_percentage)
         st.write(f"💞 {p1} & {p2} are {match_percentage}% compatible!")
         
         if match_percentage > 80:
@@ -42,6 +43,12 @@ if st.button("Calculate Compatibility 🔥"):
             st.write("💥 BOOM! It's a match made in heaven! 💘")
     else:
         st.error("Select two different students!")
+
+# Compatibility Results Section
+st.subheader("🔍 Previous Compatibility Results")
+if "last_match" in st.session_state:
+    p1, p2, match_percentage = st.session_state["last_match"]
+    st.write(f"💞 Last Match: {p1} & {p2} - {match_percentage}% Compatible")
 
 # Questionnaire Section
 st.subheader("📝 Answer Some Fun Questions")
