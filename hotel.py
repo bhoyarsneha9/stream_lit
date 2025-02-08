@@ -14,16 +14,16 @@ options = st.sidebar.radio("Choose a Service:",
 
 # Dummy Data for Demonstration
 hotels = pd.DataFrame({
-    "Hotel Name": ["Hotel A", "Hotel B", "Hotel C"],
-    "Location": ["City X", "City Y", "City Z"],
-    "Price per Night": ["$100", "$150", "$200"],
+    "Hotel Name": ["Radisson blue", "OYO PCrown", "Chandni"],
+    "Location": ["Nagpur", "Amaravati", "Wanadongri"],
+    "Price per Night": ["Rs 10000", "Rs 499", "Rs 900"],
     "Rating": ["⭐️⭐️⭐️⭐️", "⭐️⭐️⭐️⭐️⭐️", "⭐️⭐️⭐️"]
 })
 
 homestays = pd.DataFrame({
     "Homestay Name": ["Homestay A", "Homestay B", "Homestay C"],
-    "Location": ["City X", "City Y", "City Z"],
-    "Price per Night": ["$80", "$120", "$90"],
+    "Location": ["Nagpur", "Amaravati", "Wanadongri"],
+    "Price per Night": ["Rs 10000", "Rs 499", "Rs 900"],
     "Rating": ["⭐️⭐️⭐️⭐️", "⭐️⭐️⭐️⭐️⭐️", "⭐️⭐️⭐️"]
 })
 
@@ -125,4 +125,4 @@ elif options == "Itinerary Planner":
 
 # Footer
 st.sidebar.markdown("---")
-st.sidebar.write("Made with ❤️ by [Your Name]")
+st.sidebar.write("Made with ❤️ by TRIPIT")
