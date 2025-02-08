@@ -25,52 +25,48 @@ students = [
 df = pd.DataFrame(students, columns=["Name"])
 df["Timestamp"] = datetime.now()
 
-st.title("🔥 TRYME 🫦")
+st.set_page_config(page_title="🔥 TRYME 🫦", page_icon="🔥", layout="wide")
+st.sidebar.title("Navigation")
+page = st.sidebar.radio("Go to", ["Home", "Compatibility Test", "Random Matches", "Questionnaire", "Registered Users"])
 
-# Compatibility Calculator
-st.subheader("💥 Compatibility Calculator")
-p1 = st.selectbox("Select Person 1", df["Name"].tolist())
-p2 = st.selectbox("Select Person 2", df["Name"].tolist())
+if page == "Home":
+    st.title("🔥 Welcome to TRYME 🫦")
+    st.write("Find your perfect match based on your humor and personality!")
 
-if st.button("Calculate Compatibility 🔥"):
-    if p1 != p2:
-        match_percentage = random.randint(10, 100)
-        st.session_state["last_match"] = (p1, p2, match_percentage)
-        st.write(f"💞 {p1} & {p2} are {match_percentage}% compatible!")
-        
-        if match_percentage > 80:
+elif page == "Compatibility Test":
+    st.subheader("💥 Compatibility Test Based on Questionnaire")
+    st.write("Answer the questions below to find your best match!")
+    age = st.number_input("Enter Your Age", min_value=18, max_value=100, step=1)
+    gender = st.selectbox("Your Gender", ["Male", "Female", "Other"])
+    preference = st.selectbox("Your Preference", ["Straight", "Gay", "Lesbian", "Bisexual", "Pansexual", "Other"])
+    
+    questions = [
+        "What's your darkest humor joke?",
+        "If you had to commit a crime, what would it be?",
+        "What’s the worst thing you've ever laughed at?",
+        "If you were a serial killer, what would be your nickname?"
+    ]
+    answers = []
+    for q in questions:
+        answers.append(st.text_input(q, ""))
+    
+    if st.button("Submit My Answers"):
+        match = random.choice(df["Name"].tolist())
+        st.success(f"Based on your answers, your best match is: {match} 💖")
+
+elif page == "Random Matches":
+    st.subheader("💖 Get a Random Match")
+    if st.button("Find My Random Match"):
+        match = random.sample(df["Name"].tolist(), 2)
+        st.write(f"✨ Your match is: {match[0]} & {match[1]} 💘")
+        if random.randint(1, 100) > 80:
             st.balloons()
-            st.write("💥 BOOM! It's a match made in heaven! 💘")
-    else:
-        st.error("Select two different students!")
 
-# Compatibility Results Section
-st.subheader("🔍 Previous Compatibility Results")
-if "last_match" in st.session_state:
-    p1, p2, match_percentage = st.session_state["last_match"]
-    st.write(f"💞 Last Match: {p1} & {p2} - {match_percentage}% Compatible")
-
-# Questionnaire Section
-st.subheader("📝 Answer Some Fun Questions")
-age = st.number_input("Enter Your Age", min_value=18, max_value=100, step=1)
-gender = st.selectbox("Your Gender", ["Male", "Female", "Other"])
-preference = st.selectbox("Your Preference", ["Straight", "Gay", "Lesbian", "Bisexual", "Pansexual", "Other"])
-
-questions = [
-    "What's your darkest humor joke?",
-    "If you had to commit a crime, what would it be?",
-    "What’s the worst thing you've ever laughed at?",
-    "If you were a serial killer, what would be your nickname?"
-]
-answers = []
-for q in questions:
-    answers.append(st.text_input(q, ""))
-
-dark_answers = ", ".join(answers)
-
-if st.button("Submit My Answers"):
-    st.success("Your answers have been recorded!")
-
-# Hidden User Data Section
-with st.expander("🔍 View All Registered Users"):
+elif page == "Questionnaire":
+    st.subheader("📝 Answer Some Fun Questions")
+    for q in ["What's your darkest humor joke?", "If you had to commit a crime, what would it be?", "What’s the worst thing you've ever laughed at?", "If you were a serial killer, what would be your nickname?"]:
+        st.text_input(q, "")
+    
+elif page == "Registered Users":
+    st.subheader("🔍 View All Registered Users")
     st.dataframe(df)
