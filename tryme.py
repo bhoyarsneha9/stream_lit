@@ -4,52 +4,41 @@ import pandas as pd
 from datetime import datetime
 
 # Load existing user data
-try:
-    user_data = pd.read_csv("users.csv")
-except:
-    user_data = pd.DataFrame(columns=["Name", "Age", "Gender", "Preference", "Dark_Answers", "Timestamp"])
-
-st.title("🔥 Dark Humor Matchmaking 💘")
-
-# User Input
-name = st.text_input("Your Name")
-age = st.number_input("Your Age", min_value=18, max_value=100, step=1)
-gender = st.selectbox("Your Gender", ["Male", "Female", "Other"])
-preference = st.selectbox("Your Preference", ["Straight", "Gay", "Lesbian", "Bisexual", "Pansexual", "Other"])
-
-# Dark Humor Questions
-st.subheader("Answer these dark humor questions 😈")
-questions = [
-    "If you had to commit a crime, what would it be?",
-    "What’s the worst thing you've ever laughed at?",
-    "If you were a serial killer, what would be your nickname?"
+students = [
+    "BALI MANJIRI RAJESH", "GAIKWAD PRACHITI YOGESH", "RUCHITA NAGESHRAO GURUDWAR", "JAD SAKSHI AJAY", 
+    "RAULKAR SAMPADA MADAN", "KHAN SANA NASIR", "SHIWANGI RATHORE", "WANDHARE SHRAVIKA MANOJ", 
+    "LADKE SHREYA SHRIKRUSHNA", "THAKARE SHREYA DILIPRAO", "NANDANWAR SHREYA MANOJ", "DHOLE SMRUTI DEVENDRA", 
+    "BHOYAR SNEHA SHAILESH", "SUHANI MANOJ URKUDE", "SADAWARTI SUKANYA MEGHRAJ", "PUSATE SUMEDHA RAVINDRA", 
+    "KHANDRE SWARANGI SANJAY", "SHENDE TANISHKA VILAS", "MAHAJAN TANUSHRI PURUSHOTTAM", "AMBAGADE UNNATI ASHOK", 
+    "PATIL UTKARSHA VIVEK", "PATTANAYAK ARNAB ARBINDA", "BHADADE ASHISH ANIL", "BAMNOTE DHIRAJ MOTILAL", 
+    "SHEIKH FARDIN ZAHIR", "GAURAV PRANAY KOKASH", "BELE JAYESH DAMODHAR", "MOHAMMAD TAEB SHAKEEL AHMED", 
+    "SAWAI MOHIT KISHOR", "YELNE PRAJYOT PRASHANT", "UDAPURKAR RACHIT RAJENDRA", "GODSUNDARE SAHIL MUKUND", 
+    "MITKARI SAI MANGESH", "KHANDARE SANCHIT HEMANT", "NAHATE SANDESH NITESH", "SINGH SAURABH ATUL", 
+    "SUKALKAR SHAILESH RAJESH", "SARVE SHASHANK DAYAL", "SHUBH JHA", "PHALKE SOHAM MANGESH", 
+    "REWATKAR SPANDAN ANAND", "PANSE SUBODH DHANANJAY", "GUPTA SUJAL RAJESH", "DHAGE SUJAL SANJAY", 
+    "RANGARI SUJAL ANIL", "MESHRAM SURENDRA VIJAY", "GAWANDE SWARUP AJAY", "TAMBOLI SWAYAM SUBHASHRAO", 
+    "SHRIKHANDE TEJAS PRASHANT", "BARMASE TEJAS RAJENDRA", "TEMBHURKAR UDAY BHARAT", "NARNAWARE VANSH ISHWAR", 
+    "VITANKAR VEDANT SANJAY", "BOGAWAR VEDANT MILIND", "PARATE VEDDHANT CHANDRAKANT", "KHAWANE YADNYESH RAJENDRA", 
+    "UTANE YASH SATISH", "BORSARE YASH MILIND", "CHANNE YASH NARESH", "KHADSE YASH RAMRAO", "BAMBAL YUGANT SEVAKRAM"
 ]
-answers = []
-for q in questions:
-    answers.append(st.text_input(q, ""))
 
-dark_answers = ", ".join(answers)
+df = pd.DataFrame(students, columns=["Name"])
 
-# Submit Button
-if st.button("Submit and Find Matches 💘"):
-    if name and age and gender and preference:
-        # Save User
-        new_data = pd.DataFrame([[name, age, gender, preference, dark_answers, datetime.now()]],
-                                columns=user_data.columns)
-        user_data = pd.concat([user_data, new_data], ignore_index=True)
-        user_data.to_csv("users.csv", index=False)
-        st.success("Profile Submitted! Now Finding Your Match...")
-    else:
-        st.error("Please fill in all details!")
+df["Gender"] = ["Male" if "YASH" in name or "VEDANT" in name or "UDAY" in name else "Female" for name in df["Name"]]
+df["Preference"] = [random.choice(["Straight", "Gay", "Lesbian","Pansexual"]) for _ in df["Name"]]
+df["Dark_Answers"] = ["Random dark humor response" for _ in df["Name"]]
+df["Timestamp"] = datetime.now()
+
+st.title("🔥TRYME🫦")
 
 # Show Existing Users
-st.subheader("💖 Meet Other Singles")
-st.dataframe(user_data)
+st.subheader("💖 Meet Other Students")
+st.dataframe(df)
 
 # Matchmaking System
 st.subheader("💥 Compatibility Calculator")
-p1 = st.selectbox("Select Person 1", user_data["Name"].tolist())
-p2 = st.selectbox("Select Person 2", user_data["Name"].tolist())
+p1 = st.selectbox("Select Student 1", df["Name"].tolist())
+p2 = st.selectbox("Select Student 2", df["Name"].tolist())
 
 if st.button("Calculate Compatibility 🔥"):
     if p1 != p2:
@@ -60,4 +49,4 @@ if st.button("Calculate Compatibility 🔥"):
             st.balloons()
             st.write("💥 BOOM! It's a match made in heaven! 💘")
     else:
-        st.error("Select two different people!")
+        st.error("Select two different students!")
