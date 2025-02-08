@@ -26,6 +26,7 @@ df = pd.DataFrame(students, columns=["Name"])
 df["Timestamp"] = datetime.now()
 
 search_history = []
+questionnaire_answers = []  # New list to store questionnaire answers
 
 st.set_page_config(page_title="🔥 TRYME 🫦", page_icon="🔥", layout="wide")
 st.sidebar.title("Navigation")
@@ -43,13 +44,23 @@ elif page == "Compatibility Test":
     preference = st.selectbox("Your Preference", ["Straight", "Gay", "Lesbian"])
     
     questions = [
-        "What's your dark fantasy?", "How do you feel about sex outside?", "What’s the worst thing you've ever laughed at?", "What type of nude pictures would you like?","Are you a boob,ass or a dick person?"
+        "What's your dark fantasy?", "How do you feel about sex outside?", "What’s the worst thing you've ever laughed at?", 
+        "What type of nude pictures would you like?", "Are you a boob, ass, or a dick person?"
     ]
     answers = []
     for q in questions:
-        answers.append(st.text_input(q, ""))
-    
+        answer = st.text_input(q, "")
+        answers.append(answer)  # Store user answers
+
     if st.button("Submit My Answers"):
+        # Store answers in questionnaire_answers list
+        questionnaire_answers.append(answers)
+        
+        # Display the answers in the app
+        st.write("### Your Answers:")
+        for idx, q in enumerate(questions):
+            st.write(f"{q} : {answers[idx]}")
+        
         match = random.choice(df["Name"].tolist())
         st.success(f"Based on your answers, your best match is: {match} 💖")
 
@@ -63,9 +74,9 @@ elif page == "Random Matches":
 
 elif page == "Questionnaire":
     st.subheader("📝 Answer Some Fun Questions")
-    for q in ["What's your dark fantasy?", "How do you feel about sex outside?", "What’s the worst thing you've ever laughed at?", "What type of nude pictures would you like?","Are you a boob,ass or a dick person?"]:
+    for q in ["What's your dark fantasy?", "How do you feel about sex outside?", "What’s the worst thing you've ever laughed at?", "What type of nude pictures would you like?", "Are you a boob, ass, or a dick person?"]:
         st.text_input(q, "")
-    
+
 elif page == "Registered Users":
     st.subheader("🔍 View All Registered Users")
     st.dataframe(df)
@@ -79,6 +90,7 @@ elif page == "Name Compatibility":
         if name1 != name2:
             compatibility = random.randint(10, 100)
             st.write(f"💞 {name1} & {name2} have a compatibility of {compatibility}%!")
+            # Add the compatibility result to search history
             search_history.append((name1, name2, compatibility))
             if compatibility > 80:
                 st.snow()
@@ -92,3 +104,13 @@ elif page == "Search History":
             st.write(f"{entry[0]} & {entry[1]} - {entry[2]}% Compatible")
     else:
         st.write("No searches yet!")
+
+    # Display questionnaire answers here as well
+    st.subheader("📋 Your Questionnaire Answers")
+    if questionnaire_answers:
+        for idx, answers in enumerate(questionnaire_answers):
+            st.write(f"**Submission {idx + 1}:**")
+            for i, answer in enumerate(answers):
+                st.write(f"Q{i + 1}: {answer}")
+    else:
+        st.write("No answers yet!")
