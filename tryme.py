@@ -40,13 +40,10 @@ elif page == "Compatibility Test":
     st.write("Answer the questions below to find your best match!")
     age = st.number_input("Enter Your Age", min_value=18, max_value=100, step=1)
     gender = st.selectbox("Your Gender", ["Male", "Female", "Other"])
-    preference = st.selectbox("Your Preference", ["Straight", "Gay", "Lesbian", "Bisexual", "Pansexual", "Other"])
+    preference = st.selectbox("Your Preference", ["Straight", "Gay", "Lesbian"])
     
     questions = [
-        "What's your darkest humor joke?",
-        "If you had to commit a crime, what would it be?",
-        "What’s the worst thing you've ever laughed at?",
-        "If you were a serial killer, what would be your nickname?"
+        "What's your dark fantasy?", "How do you feel about sex outside?", "What’s the worst thing you've ever laughed at?", "What type of nude pictures would you like?","Are you a boob,ass or a dick person?"
     ]
     answers = []
     for q in questions:
