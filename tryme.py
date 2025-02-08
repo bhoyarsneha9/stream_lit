@@ -23,22 +23,14 @@ students = [
 ]
 
 df = pd.DataFrame(students, columns=["Name"])
-
-df["Gender"] = ["Male" if "YASH" in name or "VEDANT" in name or "UDAY" in name else "Female" for name in df["Name"]]
-df["Preference"] = [random.choice(["Straight", "Gay", "Lesbian","Pansexual"]) for _ in df["Name"]]
-df["Dark_Answers"] = ["Random dark humor response" for _ in df["Name"]]
 df["Timestamp"] = datetime.now()
 
-st.title("🔥TRYME🫦")
+st.title("🔥 TRYME 🫦")
 
-# Show Existing Users
-st.subheader("💖 Meet Other Students")
-st.dataframe(df)
-
-# Matchmaking System
+# Compatibility Calculator
 st.subheader("💥 Compatibility Calculator")
-p1 = st.selectbox("Select Student 1", df["Name"].tolist())
-p2 = st.selectbox("Select Student 2", df["Name"].tolist())
+p1 = st.selectbox("Select Person 1", df["Name"].tolist())
+p2 = st.selectbox("Select Person 2", df["Name"].tolist())
 
 if st.button("Calculate Compatibility 🔥"):
     if p1 != p2:
@@ -50,3 +42,28 @@ if st.button("Calculate Compatibility 🔥"):
             st.write("💥 BOOM! It's a match made in heaven! 💘")
     else:
         st.error("Select two different students!")
+
+# Questionnaire Section
+st.subheader("📝 Answer Some Fun Questions")
+age = st.number_input("Enter Your Age", min_value=18, max_value=100, step=1)
+gender = st.selectbox("Your Gender", ["Male", "Female", "Other"])
+preference = st.selectbox("Your Preference", ["Straight", "Gay", "Lesbian", "Bisexual", "Pansexual", "Other"])
+
+questions = [
+    "What's your darkest humor joke?",
+    "If you had to commit a crime, what would it be?",
+    "What’s the worst thing you've ever laughed at?",
+    "If you were a serial killer, what would be your nickname?"
+]
+answers = []
+for q in questions:
+    answers.append(st.text_input(q, ""))
+
+dark_answers = ", ".join(answers)
+
+if st.button("Submit My Answers"):
+    st.success("Your answers have been recorded!")
+
+# Hidden User Data Section
+with st.expander("🔍 View All Registered Users"):
+    st.dataframe(df)
